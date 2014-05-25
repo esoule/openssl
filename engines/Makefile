@@ -79,8 +79,7 @@ lib:	$(LIBOBJ)
 	fi; \
 	touch lib
 
-files:
-	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
+files: files_common
 
 links:
 
@@ -111,8 +110,7 @@ install:
 		done; \
 	fi
 
-tags:
-	ctags $(SRC)
+tags: tags_common
 
 errors:
 	set -e; for l in $(LIBNAMES); do \
@@ -122,8 +120,7 @@ errors:
 
 tests:
 
-lint:
-	lint -DLINT $(INCLUDES) $(SRC)>fluff
+lint: lint_common
 
 depend:
 	@if [ -z "$(THIS)" ]; then \
@@ -132,12 +129,9 @@ depend:
 	    $(MAKEDEPEND) -- $(CFLAG) $(INCLUDES) $(DEPFLAG) -- $(PROGS) $(LIBSRC); \
 	fi
 
-dclean:
-	$(PERL) -pe 'if (/^# DO NOT DELETE THIS LINE/) {print; exit(0);}' $(MAKEFILE) >Makefile.new
-	mv -f Makefile.new $(MAKEFILE)
+dclean: dclean_common
 
-clean:
-	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
+clean: clean_common
 
 include $(TOP)/Makefile.common
 

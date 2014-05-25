@@ -133,8 +133,7 @@ all:	exe
 
 exe:	$(EXE) dummytest$(EXE_EXT)
 
-files:
-	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
+files: files_common
 
 links:
 
@@ -146,8 +145,7 @@ errors:
 
 install:
 
-tags:
-	ctags $(SRC)
+tags: tags_common
 
 tests:	exe apps $(TESTS)
 
@@ -333,8 +331,7 @@ test_jpake: jpaketest$(EXE_EXT)
 	@echo "Test JPAKE"
 	../util/shlib_wrap.sh ./jpaketest
 
-lint:
-	lint -DLINT $(INCLUDES) $(SRC)>fluff
+lint: lint_common
 
 depend:
 	@if [ -z "$(THIS)" ]; then \
@@ -343,12 +340,9 @@ depend:
 	    $(MAKEDEPEND) -- $(CFLAG) $(INCLUDES) $(DEPFLAG) -- $(PROGS) $(SRC); \
 	fi
 
-dclean:
-	$(PERL) -pe 'if (/^# DO NOT DELETE THIS LINE/) {print; exit(0);}' $(MAKEFILE) >Makefile.new
-	mv -f Makefile.new $(MAKEFILE)
+dclean: dclean_common
 
-clean:
-	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
+clean: clean_common
 	rm -f *.dll .rnd tmp.bntest tmp.bctest $(EXE) *.ss *.srl log dummytest
 
 $(DLIBSSL):

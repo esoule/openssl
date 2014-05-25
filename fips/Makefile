@@ -132,8 +132,7 @@ fips_standalone_sha1$(EXE_EXT):	sha/fips_standalone_sha1.c
 subdirs:
 	@target=all; $(RECURSIVE_MAKE)
 
-files:
-	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
+files: files_common
 	@target=files; $(RECURSIVE_MAKE)
 
 links:
@@ -175,13 +174,7 @@ fips_test_diff:
 	fi
 
 
-install:
-	@[ -n "$(INSTALLTOP)" ] # should be set by top Makefile...
-	@headerlist="$(EXHEADER)"; for i in $$headerlist ;\
-	do \
-	(cp $$i $(INSTALL_PREFIX)$(INSTALLTOP)/include/openssl/$$i; \
-	chmod 644 $(INSTALL_PREFIX)$(INSTALLTOP)/include/openssl/$$i ); \
-	done;
+install: install_common
 	@target=install; $(RECURSIVE_MAKE)
 	for i in $(EXE) ; \
 	do \
@@ -208,9 +201,7 @@ clean:
 		*.s *.o */*.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
 	@target=clean; $(RECURSIVE_MAKE)
 
-dclean:
-	$(PERL) -pe 'if (/^# DO NOT DELETE THIS LINE/) {print; exit(0);}' $(MAKEFILE) >Makefile.new
-	mv -f Makefile.new $(MAKEFILE)
+dclean: dclean_common
 	@target=dclean; $(RECURSIVE_MAKE)
 
 include $(TOP)/Makefile.common
