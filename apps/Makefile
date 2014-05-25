@@ -139,7 +139,8 @@ dclean:
 	mv -f Makefile.new $(MAKEFILE)
 
 clean:
-	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff $(EXE)
+	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
+	rm -f *.dll $(EXE)
 	rm -f req
 
 $(DLIBSSL):

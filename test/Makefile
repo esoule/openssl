@@ -348,7 +348,8 @@ dclean:
 	mv -f Makefile.new $(MAKEFILE)
 
 clean:
-	rm -f .rnd tmp.bntest tmp.bctest *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff $(EXE) *.ss *.srl log dummytest
+	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
+	rm -f *.dll .rnd tmp.bntest tmp.bctest $(EXE) *.ss *.srl log dummytest
 
 $(DLIBSSL):
 	(cd ..; $(MAKE) DIRS=ssl all)
