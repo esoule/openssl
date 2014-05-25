@@ -1,5 +1,6 @@
 # Object files
 *.o
+*.i
 
 # editor artefacts
 *.swp
