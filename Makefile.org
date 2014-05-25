@@ -389,6 +389,42 @@ all_testapps: build_libs build_testapps
 build_testapps:
 	@dir=crypto; target=testapps; $(BUILD_ONE_CMD)
 
+# preprocess section
+
+preprocess_all: preprocess_libs preprocess_apps preprocess_tests preprocess_tools
+
+preprocess_libs: preprocess_crypto preprocess_fips preprocess_ssl preprocess_engines
+
+preprocess_fips:
+	@dir=fips; target=preprocess_all; [ -z "$(FIPSCANLIB)" ] || $(BUILD_ONE_CMD)
+
+preprocess_crypto:
+	if [ -n "$(FIPSCANLIB)" ]; then \
+		EXCL_OBJ='$(AES_ENC) $(BN_ASM) $(DES_ENC) $(CPUID_OBJ) $(SHA1_ASM_OBJ) $(MODES_ASM_OBJ) $(FIPS_EX_OBJ)' ; export EXCL_OBJ ; \
+		ARX='$(PERL) $${TOP}/util/arx.pl $(AR)' ; \
+	else \
+		ARX='${AR}' ; \
+	fi ; export ARX ; \
+	if [ $(FIPSCANISTERINTERNAL) = "y" ]; then \
+		AS='$(PERL) $${TOP}/util/fipsas.pl $${TOP} $${<} $(CC) -E' ; \
+	else \
+		AS='$(CC) -E' ; \
+	fi ; export AS ; \
+		dir=crypto; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_ssl:
+	@dir=ssl; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_engines:
+	@dir=engines; target=preprocess_all; AS='$(CC) -E'; export AS; $(BUILD_ONE_CMD)
+preprocess_apps:
+	@dir=apps; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_tests:
+	@dir=test; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_tools:
+	@dir=tools; target=preprocess_all; $(BUILD_ONE_CMD)
+
+# end of preprocess section
+
+
 libcrypto$(SHLIB_EXT): libcrypto.a build_fips
 	@if [ "$(SHLIB_TARGET)" != "" ]; then \
 		if [ "$(FIPSCANLIB)" = "libcrypto" ]; then \

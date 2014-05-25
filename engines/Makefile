@@ -96,6 +96,12 @@ e_padlock-x86.s:	asm/e_padlock-x86.pl
 e_padlock-x86_64.s:	asm/e_padlock-x86_64.pl
 	$(PERL) asm/e_padlock-x86_64.pl $(PERLASM_SCHEME) > $@
 
+preprocess_all: preprocess_subdirs
+
+preprocess_subdirs:
+	echo $(EDIRS)
+	@target=preprocess_all; $(RECURSIVE_MAKE)
+
 subdirs:
 	echo $(EDIRS)
 	@target=all; $(RECURSIVE_MAKE)

@@ -157,6 +157,12 @@ top:
 
 all:	exe
 
+EXE_I_FILES=$(EXE:$(EXE_EXT)=.i) $(FIPSEXE:$(EXE_EXT)=.i) dummytest.i
+
+preprocess_exe: $(EXE_I_FILES)
+
+preprocess_all: preprocess_exe
+
 exe:	$(EXE) $(FIPSEXE) dummytest$(EXE_EXT)
 
 fipsexe:	$(FIPSEXE)

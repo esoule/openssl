@@ -90,6 +90,11 @@ alphacpuid.s:	alphacpuid.pl
 	$(PERL) alphacpuid.pl > $$preproc && \
 	$(CC) -E $$preproc > $@ && rm $$preproc)
 
+preprocess_all: buildinf.h preprocess_subdirs
+
+preprocess_subdirs:
+	@target=preprocess_all; $(RECURSIVE_MAKE)
+
 subdirs:
 	@target=all; $(RECURSIVE_MAKE)
 
