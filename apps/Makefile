@@ -162,6 +162,12 @@ $(EXE): progs.h $(E_OBJ) $(PROGRAM).o $(DLIBCRYPTO) $(DLIBSSL)
 	  	$(PERL) tools/c_rehash certs) \
 	fi
 
+E_OBJ_I_FILES=$(E_OBJ:.o=.i) $(PROGRAM).i
+
+preprocess_exe: $(E_OBJ_I_FILES)
+
+preprocess_all: preprocess_exe
+
 progs.h: progs.pl
 	$(PERL) progs.pl $(E_EXE) >progs.h
 	$(RM) $(PROGRAM).o

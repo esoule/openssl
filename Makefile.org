@@ -350,6 +350,34 @@ all_testapps: build_libs build_testapps
 build_testapps:
 	@dir=crypto; target=testapps; $(BUILD_ONE_CMD)
 
+# preprocess section
+
+preprocess_all: preprocess_libs preprocess_apps preprocess_tests preprocess_tools
+
+preprocess_libs: preprocess_crypto preprocess_ssl preprocess_engines
+
+preprocess_crypto:
+	if [ -n "$(FIPSCANLIB)" ]; then \
+		EXCL_OBJ='$(AES_ASM_OBJ) $(BN_ASM) $(DES_ENC) $(CPUID_OBJ) $(SHA1_ASM_OBJ) $(FIPS_EX_OBJ)' ; export EXCL_OBJ ; \
+		ARX='$(PERL) $${TOP}/util/arx.pl $(AR)' ; \
+	else \
+		ARX='${AR}' ; \
+	fi ; export ARX ; \
+		dir=crypto; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_ssl:
+	@dir=ssl; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_engines:
+	@dir=engines; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_apps:
+	@dir=apps; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_tests:
+	@dir=test; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_tools:
+	@dir=tools; target=preprocess_all; $(BUILD_ONE_CMD)
+
+# end of preprocess section
+
+
 build_shared:	$(SHARED_LIBS)
 libcrypto$(SHLIB_EXT): libcrypto.a $(SHARED_FIPS)
 	@if [ "$(SHLIB_TARGET)" != "" ]; then \

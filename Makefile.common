@@ -84,7 +84,7 @@ dclean_common:
 .PHONY: dclean_common
 
 clean_common:
-	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
+	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff *.i
 
 .PHONY: clean_common
 
@@ -97,3 +97,42 @@ clean_sub_o_common:
 	rm -f */*.o
 
 .PHONY: clean_sub_o_common
+
+#
+# Preprocessing files (make preprocess_all)
+#
+
+PREPROCESS.X.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -E
+PREPROCESS.X.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -E
+PREPROCESS.X.cpp = $(PREPROCESS.X.cc)
+PREPROCESS.X.C = $(PREPROCESS.X.cc)
+PREPROCESS_ASFLAGS = $(filter-out -c,$(ASFLAGS))
+PREPROCESS.X.S = $(CC) $(PREPROCESS_ASFLAGS) $(CPPFLAGS) $(TARGET_MACH) -x assembler-with-cpp -E
+
+%.i: %.c
+	$(PREPROCESS.X.c) $(OUTPUT_OPTION) $<
+
+%.i: %.cc
+	$(PREPROCESS.X.cc) $(OUTPUT_OPTION) $<
+
+%.i: %.cpp
+	$(PREPROCESS.X.cpp) $(OUTPUT_OPTION) $<
+
+%.i: %.C
+	$(PREPROCESS.X.C) $(OUTPUT_OPTION) $<
+
+%.i: %.S
+	$(PREPROCESS.X.S) -o $@ $<
+
+%.i: %.s
+	$(PREPROCESS.X.S) -o $@ $<
+
+LIBOBJ_I_FILES=$(LIBOBJ:.o=.i)
+
+preprocess_all_common: $(LIBOBJ_I_FILES)
+
+.PHONY: preprocess_all_common
+
+preprocess_all: preprocess_all_common
+
+.PHONY: preprocess_all

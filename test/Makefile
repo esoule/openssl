@@ -133,6 +133,12 @@ all:	exe
 
 exe:	$(EXE) dummytest$(EXE_EXT)
 
+EXE_I_FILES=$(EXE:$(EXE_EXT)=.i) dummytest.i
+
+preprocess_exe: $(EXE_I_FILES)
+
+preprocess_all: preprocess_exe
+
 files: files_common
 
 links:

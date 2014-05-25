@@ -81,6 +81,11 @@ testapps:
 	[ -z "$(THIS)" ] || ( cd pkcs7 && $(MAKE) -e testapps );
 	@if [ -z "$(THIS)" ]; then $(MAKE) -f $(TOP)/Makefile reflect THIS=$@; fi
 
+preprocess_all: buildinf.h preprocess_subdirs
+
+preprocess_subdirs:
+	@target=preprocess_all; $(RECURSIVE_MAKE)
+
 subdirs:
 	@target=all; $(RECURSIVE_MAKE)
 
