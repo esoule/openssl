@@ -289,6 +289,28 @@ all_testapps: build_libs build_testapps
 build_testapps:
 	@dir=crypto; target=testapps; $(BUILD_ONE_CMD)
 
+# preprocess section
+
+preprocess_all: preprocess_libs preprocess_apps preprocess_tests preprocess_tools
+
+preprocess_libs: preprocess_crypto preprocess_ssl preprocess_engines
+
+preprocess_crypto:
+	@dir=crypto; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_ssl:
+	@dir=ssl; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_engines:
+	@dir=engines; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_apps:
+	@dir=apps; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_tests:
+	@dir=test; target=preprocess_all; $(BUILD_ONE_CMD)
+preprocess_tools:
+	@dir=tools; target=preprocess_all; $(BUILD_ONE_CMD)
+
+# end of preprocess section
+
+
 fips_premain_dso$(EXE_EXT): libcrypto.a
 	[ -z "$(FIPSCANLIB)" ] || $(CC) $(CFLAG) -Iinclude \
 		-DFINGERPRINT_PREMAIN_DSO_LOAD -o $@  \

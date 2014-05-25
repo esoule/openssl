@@ -93,6 +93,8 @@ s390x-gf2m.s:	asm/s390x-gf2m.pl
 
 x86_64-gcc.o:	asm/x86_64-gcc.c
 	$(CC) $(CFLAGS) -c -o $@ asm/x86_64-gcc.c
+x86_64-gcc.i:	asm/x86_64-gcc.c
+	$(CC) $(CFLAGS) -E -o $@ asm/x86_64-gcc.c
 x86_64-mont.s:	asm/x86_64-mont.pl
 	$(PERL) asm/x86_64-mont.pl $(PERLASM_SCHEME) > $@
 x86_64-mont5.s:	asm/x86_64-mont5.pl

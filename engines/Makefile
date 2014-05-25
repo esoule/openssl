@@ -91,6 +91,12 @@ subdirs:
 	echo $(EDIRS)
 	@target=all; $(RECURSIVE_MAKE)
 
+preprocess_all: preprocess_subdirs
+
+preprocess_subdirs:
+	echo $(EDIRS)
+	@target=preprocess_all; $(RECURSIVE_MAKE)
+
 files: files_common
 	@target=files; $(RECURSIVE_MAKE)
 
