@@ -90,14 +90,10 @@ testapps:
 subdirs:
 	@target=all; $(RECURSIVE_MAKE)
 
-files:
-	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
+files: files_common
 	@target=files; $(RECURSIVE_MAKE)
 
-links:
-	@$(PERL) $(TOP)/util/mklink.pl ../include/openssl $(EXHEADER)
-	@$(PERL) $(TOP)/util/mklink.pl ../test $(TEST)
-	@$(PERL) $(TOP)/util/mklink.pl ../apps $(APPS)
+links: links_up1_common
 	@target=links; $(RECURSIVE_MAKE)
 
 # lib: $(LIB): are splitted to avoid end-less loop
@@ -116,13 +112,7 @@ shared: buildinf.h lib subdirs
 libs:
 	@target=lib; $(RECURSIVE_MAKE)
 
-install:
-	@[ -n "$(INSTALLTOP)" ] # should be set by top Makefile...
-	@headerlist="$(EXHEADER)"; for i in $$headerlist ;\
-	do \
-	(cp $$i $(INSTALL_PREFIX)$(INSTALLTOP)/include/openssl/$$i; \
-	chmod 644 $(INSTALL_PREFIX)$(INSTALLTOP)/include/openssl/$$i ); \
-	done;
+install: install_common
 	@target=install; $(RECURSIVE_MAKE)
 
 lint:
@@ -135,14 +125,11 @@ depend:
 	@[ -z "$(THIS)" ] || (set -e; target=depend; $(RECURSIVE_MAKE) )
 	@if [ -z "$(THIS)" ]; then $(MAKE) -f $(TOP)/Makefile reflect THIS=$@; fi
 
-clean:
-	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
+clean: clean_common
 	rm -f buildinf.h */*.o *.s
 	@target=clean; $(RECURSIVE_MAKE)
 
-dclean:
-	$(PERL) -pe 'if (/^# DO NOT DELETE THIS LINE/) {print; exit(0);}' $(MAKEFILE) >Makefile.new
-	mv -f Makefile.new $(MAKEFILE)
+dclean: dclean_common
 	rm -f opensslconf.h
 	@target=dclean; $(RECURSIVE_MAKE)
 

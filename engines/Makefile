@@ -91,8 +91,7 @@ subdirs:
 	echo $(EDIRS)
 	@target=all; $(RECURSIVE_MAKE)
 
-files:
-	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
+files: files_common
 	@target=files; $(RECURSIVE_MAKE)
 
 links:
@@ -130,8 +129,7 @@ install:
 	fi
 	@target=install; $(RECURSIVE_MAKE)
 
-tags:
-	ctags $(SRC)
+tags: tags_common
 
 errors:
 	set -e; for l in $(LIBNAMES); do \
@@ -142,8 +140,7 @@ errors:
 
 tests:
 
-lint:
-	lint -DLINT $(INCLUDES) $(SRC)>fluff
+lint: lint_common
 	@target=lint; $(RECURSIVE_MAKE)
 
 depend:
@@ -153,13 +150,10 @@ depend:
 	@[ -z "$(THIS)" ] || $(MAKEDEPEND) -- $(CFLAG) $(INCLUDES) $(DEPFLAG) -- $(PROGS) $(LIBSRC)
 	@[ -z "$(THIS)" ] || (set -e; target=depend; $(RECURSIVE_MAKE) )
 
-dclean:
-	$(PERL) -pe 'if (/^# DO NOT DELETE THIS LINE/) {print; exit(0);}' $(MAKEFILE) >Makefile.new
-	mv -f Makefile.new $(MAKEFILE)
+dclean: dclean_common
 	@target=dclean; $(RECURSIVE_MAKE)
 
-clean:
-	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
+clean: clean_common
 	@target=clean; $(RECURSIVE_MAKE)
 
 include $(TOP)/Makefile.common
