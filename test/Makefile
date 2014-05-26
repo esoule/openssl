@@ -482,6 +482,8 @@ $(SRPTEST)$(EXE_EXT): $(SRPTEST).o $(DLIBCRYPTO)
 dummytest$(EXE_EXT): dummytest.o $(DLIBCRYPTO)
 	@target=dummytest; $(BUILD_CMD)
 
+include $(TOP)/Makefile.common
+
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 asn1test.o: ../include/openssl/asn1.h ../include/openssl/asn1_mac.h
