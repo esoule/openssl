@@ -73,6 +73,8 @@ dclean:
 clean:
 	rm -f asm/mx86unix.cpp *.o asm/*.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
 
+include $(TOP)/Makefile.common
+
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 md4_dgst.o: ../../include/openssl/bio.h ../../include/openssl/crypto.h

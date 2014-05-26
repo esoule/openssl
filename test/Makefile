@@ -540,6 +540,8 @@ jpaketest$(EXE_EXT): jpaketest.o $(DLIBCRYPTO)
 dummytest$(EXE_EXT): dummytest.o $(DLIBCRYPTO)
 	@target=dummytest; $(BUILD_CMD)
 
+include $(TOP)/Makefile.common
+
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 bftest.o: ../e_os.h ../include/openssl/blowfish.h ../include/openssl/e_os2.h

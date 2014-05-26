@@ -93,6 +93,8 @@ dclean:
 clean:
 	rm -f *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff enc dec sign verify
 
+include $(TOP)/Makefile.common
+
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 pk7_asn1.o: ../../e_os.h ../../include/openssl/asn1.h

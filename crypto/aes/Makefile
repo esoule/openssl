@@ -95,6 +95,8 @@ dclean:
 clean:
 	rm -f *.s *.o *.obj lib tags core .pure .nfs* *.old *.bak fluff
 
+include $(TOP)/Makefile.common
+
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 aes_cbc.o: ../../include/openssl/aes.h ../../include/openssl/e_os2.h

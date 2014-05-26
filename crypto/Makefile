@@ -137,6 +137,8 @@ dclean:
 	mv -f Makefile.new $(MAKEFILE)
 	@target=dclean; $(RECURSIVE_MAKE)
 
+include $(TOP)/Makefile.common
+
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 cpt_err.o: ../include/openssl/bio.h ../include/openssl/crypto.h
