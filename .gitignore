@@ -75,3 +75,7 @@
 lib
 Makefile.save
 *.bak
+
+*.orig
+*.rej
+
