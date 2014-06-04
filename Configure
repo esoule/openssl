@@ -1127,7 +1127,7 @@ else				{ $lflags=$prelflags; undef $prelflags; }
 my $no_shared_warn=0;
 my $no_user_cflags=0;
 
-if ($flags ne "")	{ $cflags="$flags$cflags"; }
+if ($flags ne "")	{ $cflags="$cflags $flags"; }
 else			{ $no_user_cflags=1;       }
 
 # Kerberos settings.  The flavor must be provided from outside, either through
